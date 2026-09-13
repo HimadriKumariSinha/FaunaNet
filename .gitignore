@@ -1,21 +1,23 @@
 # Dependencies
 node_modules/
 server/node_modules/
+jspm_packages/
+web_modules/
 
 # Secrets & Environment Files
 .env
-server/.env
-.env.local
-.env.development.local
-.env.production.local
-.env.staging.local
-
-# Keep template
+.env.*
 !.env.example
+server/.env
 
 # Build Artifacts
 dist/
 dist-ssr/
+build/
+.next/
+out/
+.nuxt/
+.output/
 
 # Logs & Temporary Files
 logs/
@@ -41,4 +43,3 @@ build_log*.txt
 
 # Temporary Scratch Files
 scratch/
-

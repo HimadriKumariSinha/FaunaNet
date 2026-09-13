@@ -1,16 +1,33 @@
-# React + Vite
+# FaunaNet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A hyperlocal digital platform connecting citizens, volunteers, NGOs, veterinarians, and shelters to report, coordinate, and support animal rescue and welfare.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Rescue & SOS Dispatch**: Real-time incident reporting and responder dispatch.
+- **Municipal & NGO Dashboards**: Comprehensive management for street animal census, ABC campaigns, and asset tracking.
+- **Health & Medical Records**: EHR management for animals, vaccination tracking, and vet consultation routes.
+- **Foster & Adoption Hub**: Interactive matchmaking, application reviews, and care logs.
+- **Lost & Found Network**: AI/Community sighting reports and lost pet recovery matching.
+- **Community Hub**: Multilingual support, chat forums, and ecosystem node map.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React, Vite, CSS
+- **Backend**: Node.js, Express, MongoDB
+- **Realtime**: Socket.io
 
-## Expanding the ESLint configuration
+## Setup & Running
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+```bash
+npm install
+npm run dev
+```
+
+### Backend
+```bash
+cd server
+npm install
+npm start
+```
