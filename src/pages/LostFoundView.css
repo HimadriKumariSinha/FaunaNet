@@ -1,0 +1,10 @@
+.lost-found-view {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.form-select-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+}

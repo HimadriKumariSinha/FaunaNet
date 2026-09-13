@@ -1,0 +1,58 @@
+.foster-hub {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.foster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.foster-card {
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.foster-card:hover {
+  transform: translateY(-4px);
+}
+
+.foster-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.foster-photo-placeholder {
+  width: 100%;
+  height: 180px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foster-info {
+  padding: 1rem;
+}
+
+.fauna-id {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.applications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.application-row {
+  border-radius: 10px;
+}
