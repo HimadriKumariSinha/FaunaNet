@@ -2,94 +2,128 @@
 
 > **Hyperlocal Animal Rescue, Healthcare, and Welfare Coordination Platform**
 
-FaunaNet connects citizens, volunteers, NGOs, veterinarians, shelters, and municipal authorities into a unified digital ecosystem to streamline street animal rescue, healthcare tracking, foster/adoption management, and local welfare operations.
-
 ---
 
 ## 📌 Overview
 
-Street animal welfare in urban and semi-urban communities often suffers from fragmented communication, uncoordinated emergency responses, and lack of centralized health records. **FaunaNet** bridges these gaps by offering a real-time, hyperlocal platform where emergency SOS alerts, rescue dispatches, veterinary logs, foster applications, and community sightings seamlessly integrate into actionable workflows.
+FaunaNet is a hyperlocal digital platform that connects citizens, volunteers, NGOs, veterinarians, shelters, and municipal authorities into a unified coordination ecosystem for street animal rescue, healthcare tracking, foster/adoption management, and local animal welfare operations.
 
 ---
 
 ## 🎯 Problem
 
-FaunaNet directly addresses critical real-world challenges in animal welfare:
+Street animal welfare in urban and semi-urban communities suffers from fragmented communication and lack of coordinated response infrastructure. FaunaNet addresses:
 
-* **Fragmented Rescue Communication**: Citizens struggle to find nearby active rescue teams or available shelters during emergencies.
-* **Delayed Response Times**: Lack of real-time dispatch tracking leads to uncoordinated or missed rescue requests.
-* **Absence of Centralized Records**: Animal medical histories, vaccination status, and sterilization logs are often lost across separate organizations.
-* **Limited Stakeholder Visibility**: NGOs, municipal bodies, private vets, and citizens operate in silos without shared situational awareness.
-* **Unmonitored Follow-up Care**: Animals released after treatment or foster care lack centralized tracking mechanisms.
+- **Fragmented emergency communication**: Citizens cannot easily reach active rescue teams or available shelters in real time.
+- **No centralized health records**: Animal medical histories, vaccination status, and sterilization logs are scattered across separate organizations.
+- **Limited stakeholder visibility**: NGOs, municipal bodies, veterinarians, and volunteers operate in silos without shared situational awareness.
+- **Delayed rescue responses**: Without real-time dispatch and SLA tracking, rescue requests go uncoordinated or unresolved.
+- **No follow-up tracking**: Animals released after treatment or foster care lack centralized oversight.
 
 ---
 
 ## ✨ Key Features
 
+All features listed below are implemented in the current codebase.
+
 ### 🚨 Rescue & SOS Coordination
-* **Instant SOS Reporting**: Simple modal interface for citizens to submit emergency animal rescue reports.
-* **Real-time Dispatch Management**: Active dispatch panel for assigning responders with SLA expiration countdowns.
-* **Interactive Geo-Mapping**: Integrated Leaflet maps displaying live rescue reports, shelters, and responder locations.
-* **Status Updates**: Live notifications and status progression tracking from dispatch to resolution.
+- **One-touch SOS Reporting**: Citizens submit emergency rescue reports via a GPS-enabled modal with photo upload and real-time triage labelling.
+- **Active Dispatch Panel**: Displays the highest-priority active rescue task with a live SLA countdown timer, responder status, escalation controls, and an in-app communication bridge for quick check-in messages.
+- **Status Progression**: Rescue cases advance through states — Reported → Dispatched → Accepted → En Route → In Progress → Stabilized — with backend persistence.
+- **Escalation**: SLA-expired dispatches trigger escalation actions handled by the backend dispatch controller.
 
-### 🏥 Animal Health & Care
-* **Electronic Health Records (EHR)**: Centralized digital profiles for rescued and sheltered animals.
-* **Medical & Treatment Logs**: Track medical procedures, diagnoses, prescribed treatments, and follow-up schedules.
-* **Vaccination & Sterilization Tracking**: Maintain verified records for rabies vaccinations and ABC treatments.
-* **Veterinary Hub**: Dedicated portal for licensed veterinarians to update diagnostic records and treatment notes.
+### 🗺️ Interactive Rescue Map
+- **Live Leaflet Map**: Displays all active rescue reports as colour-coded markers (red = Critical, orange = High, green = Verified).
+- **GPS & Manual Positioning**: Auto-detects user GPS location with graceful degradation to click-to-pin for denied/unavailable geolocation.
+- **Report Feed**: A sidebar list of the latest rescue cases with click-to-centre navigation on the map.
+- **Proximity Circle**: Visual radius overlay around the selected active task.
 
-### 🏠 Foster & Adoption Hub
-* **Adoption Listings**: Searchable catalog of animals eligible for adoption with health profiles and background logs.
-* **Foster Application Workflow**: Online submission and tracking system for prospective foster parents.
-* **Caregiver Logs**: Manage foster placements, home environment checks, and ongoing care updates.
+### 🏥 Animal Health & Medical Records
+- **Medical Record Dashboard**: Veterinarians and NGOs can create and view animal medical treatment entries with examination findings, diagnosis, treatment administered, attending vet, and discharge status.
+- **Role-gated Access**: Only users with `vet`, `ngo`, or `admin` roles can add medical entries.
+- **EHR Linking**: Medical records are linked to animal profiles in the database via `animalId`.
+- **Discharge Status Tracking**: Animals transition through `in_care → ready_for_shelter → released_to_wild → ready_for_adoption`.
+
+### 🏠 Foster Hub
+- **Available Animals Listing**: Displays animals flagged as `available_for_foster` from the database, including species, age, location, and photographs.
+- **Foster Application Form**: Prospective foster parents submit applications including housing type, duration, other-pets disclosure, and experience description.
+- **Application Tracking**: Logged-in users can view their own foster application history with current status (`PENDING`, `UNDER_REVIEW`, `APPROVED`, `PLACED`, `REJECTED`, `COMPLETED`).
 
 ### 🔍 Lost & Found Network
-* **Lost Animal Reporting**: Register missing pets with detailed descriptions, last seen locations, and photos.
-* **Community Sighting Logs**: Citizens can submit visual sightings and location pins to aid pet recovery.
-* **Matching System**: Cross-reference lost reports with recent community sightings for faster reunions.
+- **Report Submission**: Users submit lost or found pet listings with species, identifying marks, last seen location, contact details, and optional photo.
+- **Filterable Directory**: Browse reports by type (LOST/FOUND) and species.
+- **Proximity Match Search**: Triggers a backend match query that returns nearby matching reports within 10 km with confidence scores and distances.
 
-### 🏛️ Municipal & NGO Management
-* **Street Animal Census**: Monitor local animal populations and distribution density.
-* **ABC Campaign Management**: Coordinate Animal Birth Control (sterilization) drives and track target metrics.
-* **Asset & Inventory Management**: Track emergency vehicles, medical equipment, traps, and shelter supplies.
+### 🏛️ Municipal & NGO Dashboard
+- **Population & Welfare Metrics**: Displays real-time statistics from the database including total animals tracked, sterilized and vaccinated counts with coverage percentages, and total shelter capacity.
+- **ABC/CNVR Campaign Management**: NGOs, vets, shelters, and admins can create and track Animal Birth Control sterilization campaigns with target areas, batch numbers, progress bars, and per-animal status tracking.
 
-### 🌍 Community & Collaboration
-* **Multilingual Support**: Fully localized interface supporting 8 languages (English, Hindi, Bengali, Gujarati, Marathi, Punjabi, Tamil, Telugu).
-* **Real-time Sector Chat**: Socket.io powered instant messaging for localized responder and volunteer communication.
-* **Ecosystem Node Directory**: Interactive map and directory of verified local shelters, clinics, feeding points, and NGOs.
+### 📦 Shelter & Asset Inventory
+- **Asset Registry**: Register and track operational assets — vehicles, medical kits, equipment, infrastructure — with availability status.
+- **Shelter Capacity Dashboard**: Aggregates total capacity and occupied beds across all registered shelters, displaying free bed count in real time.
+
+### 🌐 Ecosystem Node Directory
+- **Node Registry**: Register and browse verified local responders, vets, shelters, transport providers, and volunteers with trust levels, response history, and status.
+- **Rescue Credit Dashboard**: Tracks verified completed rescues and trust scores across the network.
+- **Proof Audit Log**: Searchable immutable log of rescue operations with verification status.
+- **Messenger Sync Settings**: Configure WhatsApp, Telegram, and Discord report import queues (toggle-based, with human review requirement).
+
+### 💬 Real-Time Sector Chat
+- **Socket.io Powered**: Fully functional real-time messaging using Socket.io with a persistent backend message store in MongoDB.
+- **Sector-Based Rooms**: Users join location-based rooms (Global, North area, South area, NGO verified) and exchange live messages.
+- **Message History**: Messages are persisted to the database and retrieved on connection.
+
+### 🌍 Multilingual Interface
+- **8 Languages Supported**: English, Hindi, Bengali, Gujarati, Marathi, Punjabi, Tamil, Telugu — fully integrated via i18next with browser language auto-detection.
+
+### 🎓 Training Center
+- **Module-Based Training**: Sequential training modules (Emergency Assessment, Handling, First Aid, Community Moderation) with XP point rewards and badge unlocks.
+- **Progress Tracking**: Completion state persisted to user profiles in the backend.
+
+### 🛡️ Admin Operations Dashboard
+- **Role Verification Queue**: Admins review and approve/reject citizen applications for elevated roles (volunteer, NGO, vet, shelter).
+- **User Management**: Full directory of all platform users with role, verification status, and trust scores.
+- **Audit Trail**: Immutable log of sensitive operations — logins, role changes, verification decisions.
+- **Duplicate Report Flagging**: Admin view of reports flagged as potential duplicates.
 
 ---
 
 ## 🚧 Roadmap
 
-Features currently planned or in development:
+Planned features not yet implemented:
 
-* 🤖 **AI Sighting Matching**: Automatic visual matching between lost pet reports and community sighting photographs.
-* 📱 **Offline PWA Capabilities**: Offline form submission with background synchronization for field responders.
-* 💬 **Automated Alert Radius**: Instant SMS and WhatsApp notifications sent to registered volunteers within a 5km radius of an SOS alert.
-* 💳 **Payment Gateway Integration**: Automated receipts and secure donation processing for registered NGOs and shelters.
+- 🤖 **AI Photo Matching**: Visual AI matching between lost pet reports and found/community sighting photographs.
+- 📱 **Offline PWA / Service Worker**: Offline form submission with background sync for field responders.
+- 📣 **Automated Alert Radius**: SMS/WhatsApp push notifications to volunteers within a configurable radius when a new SOS is submitted.
+- 💳 **Payment Gateway**: Secure donation processing with automated receipts for NGOs and shelters.
+- 🗺️ **Live Shelter Map Layer**: Shelter and clinic locations overlaid as a separate map layer on MapView.
 
 ---
 
 ## 🛠 Tech Stack
 
 ### Frontend
-* **Core Framework**: React (v19)
-* **Build Tool**: Vite (v8)
-* **Styling**: Modern Custom CSS & Framer Motion
-* **Mapping**: Leaflet & React-Leaflet
-* **3D Visualizations**: Three.js & React Three Fiber
-* **Localization**: i18next & react-i18next (8 supported languages)
-* **Icons**: Lucide React
+| Technology | Version | Purpose |
+|---|---|---|
+| React | v19 | UI framework |
+| Vite | v8 | Build tool |
+| Leaflet + React-Leaflet | v1.9 / v5 | Rescue mapping |
+| Three.js + React Three Fiber | v0.184 / v9 | 3D hero background |
+| Framer Motion | v12 | Animations |
+| i18next + react-i18next | v26 / v17 | Multilingual (8 languages) |
+| socket.io-client | v4.8 | Real-time chat |
+| Lucide React | v1.14 | Icons |
+| Axios | v1.16 | HTTP API client |
 
 ### Backend
-* **Runtime**: Node.js
-* **Server Framework**: Express.js (v5)
-* **Database**: MongoDB with Mongoose ORM (v9)
-* **Authentication**: JSON Web Tokens (JWT) & bcryptjs password hashing
-
-### Real-Time Communication
-* **WebSockets**: Socket.io & socket.io-client for real-time dispatch alerts and sector chat
+| Technology | Version | Purpose |
+|---|---|---|
+| Node.js | LTS | Runtime |
+| Express.js | v5 | API server |
+| MongoDB + Mongoose | v9 | Database + ORM |
+| Socket.io | v4.8 | WebSocket server |
+| JSON Web Tokens | v9 | Authentication |
+| bcryptjs | v3 | Password hashing |
 
 ---
 
@@ -98,30 +132,31 @@ Features currently planned or in development:
 ```text
 FaunaNet/
 ├── .env.example              # Environment variables template
-├── .gitignore                # Git ignore configuration
+├── .gitignore
 ├── LICENSE                   # MIT License
-├── README.md                 # Project documentation
-├── index.html                # Application entry HTML
-├── package.json              # Frontend & root scripts
-├── vite.config.js            # Vite configuration
-├── vercel.json               # Vercel deployment configuration
+├── README.md
+├── index.html
+├── package.json              # Frontend dependencies & scripts
+├── vite.config.js
+├── vercel.json               # Vercel SPA deployment config
 │
-├── public/                   # Public static assets & icons
+├── public/
 │   ├── favicon.svg
 │   └── icons.svg
 │
-├── src/                      # React Frontend Source Code
-│   ├── assets/               # Media assets and visual graphics
-│   ├── components/           # Reusable UI components
-│   │   ├── Community/        # Real-time sector chat components
-│   │   ├── InteractiveLayer/ # 3D background & hero scene
+├── src/
+│   ├── assets/               # Images and static assets
+│   ├── components/
+│   │   ├── Community/        # Real-time sector Chat (Socket.io)
+│   │   ├── InteractiveLayer/ # 3D animated hero scene (Three.js)
 │   │   ├── ActiveDispatchPanel.jsx
 │   │   ├── AnimalProfileModal.jsx
-│   │   ├── SOSReportModal.jsx
-│   │   └── Layout.jsx
-│   ├── config/               # Language and app configurations
-│   ├── context/              # Global React AppContext state
-│   ├── pages/                # Main application views & dashboards
+│   │   ├── ConstellationBackground.jsx
+│   │   ├── Layout.jsx
+│   │   └── SOSReportModal.jsx
+│   ├── config/               # Language list config
+│   ├── context/              # Global AppContext (auth, tasks, ecosystem state)
+│   ├── pages/
 │   │   ├── AdminDashboard.jsx
 │   │   ├── AssetInventory.jsx
 │   │   ├── Auth.jsx
@@ -134,18 +169,42 @@ FaunaNet/
 │   │   ├── MunicipalDashboard.jsx
 │   │   ├── TaskBoard.jsx
 │   │   └── TrainingCenter.jsx
-│   ├── services/             # Axios API client & Socket.io connections
-│   └── translations/         # Translation JSON bundles (en, hi, bn, etc.)
+│   ├── services/
+│   │   ├── api.js            # Axios API service layer
+│   │   └── socket.js         # Socket.io client connection
+│   └── translations/         # en, hi, bn, gu, mr, pa, ta, te
 │
-└── server/                   # Node.js Express Backend Source Code
-    ├── index.js              # Express app & Socket.io server entry point
-    ├── package.json          # Server dependencies & scripts
-    ├── controllers/          # Business logic controllers (SOS, Auth, ABC, Vets)
-    ├── middleware/           # JWT auth and security middleware
-    ├── models/               # Mongoose schemas (Animal, Report, User, Shelter, etc.)
-    ├── routes/               # Express API endpoints
-    ├── utils/                # Database fallbacks and utilities
-    └── tests/                # API integration test suites
+└── server/
+    ├── index.js              # Express app + Socket.io server entry
+    ├── package.json
+    ├── controllers/          # Route handlers (auth, animals, dispatch, vet, ABC, admin...)
+    ├── middleware/           # JWT authentication middleware
+    ├── models/               # Mongoose schemas
+    │   ├── Animal.js
+    │   ├── AnimalSighting.js
+    │   ├── ABCCampaign.js
+    │   ├── AdoptionApplication.js
+    │   ├── Asset.js
+    │   ├── AuditLog.js
+    │   ├── Caregiver.js
+    │   ├── Donation.js
+    │   ├── FaunaNode.js
+    │   ├── FosterApplication.js
+    │   ├── Group.js
+    │   ├── LostFoundReport.js
+    │   ├── MedicalRecord.js
+    │   ├── Message.js
+    │   ├── Notification.js
+    │   ├── Organization.js
+    │   ├── Report.js
+    │   ├── RescueLog.js
+    │   ├── Shelter.js
+    │   ├── Task.js
+    │   ├── User.js
+    │   └── UserSettings.js
+    ├── routes/               # Express route definitions
+    ├── utils/                # DB fallback utilities
+    └── tests/                # API test suite
 ```
 
 ---
@@ -154,101 +213,96 @@ FaunaNet/
 
 ### Prerequisites
 
-Ensure you have the following installed on your system:
-* **Node.js** (v18.0.0 or higher recommended)
-* **npm** (v9.0.0 or higher)
-* **MongoDB** (Local instance or MongoDB Atlas cluster)
+- **Node.js** v18+ and **npm** v9+
+- **MongoDB** — local instance or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster
 
-### Clone the Repository
+### Clone
 
 ```bash
 git clone https://github.com/HimadriKumariSinha/FaunaNet.git
 cd FaunaNet
 ```
 
-### Option A: Full-Stack Concurrent Setup (Recommended)
-
-Run both the React frontend and Node.js backend concurrently from the root directory:
+### Option A: Full-Stack Concurrent (Recommended)
 
 ```bash
-# 1. Install root dependencies
+# Install root frontend dependencies
 npm install
 
-# 2. Install server dependencies
+# Install backend dependencies
 cd server && npm install && cd ..
 
-# 3. Start both frontend & backend concurrently
+# Run both frontend + backend concurrently
 npm run dev
 ```
 
-### Option B: Individual Service Setup
+### Option B: Separate Services
 
-#### Frontend Setup
+#### Frontend only
 ```bash
 npm install
 npm run dev:client
+# → http://localhost:5173
 ```
-The frontend will be available at `http://localhost:5173`.
 
-#### Backend Setup
+#### Backend only
 ```bash
 cd server
 npm install
 npm start
+# → http://localhost:5000
 ```
-The backend API server will run on `http://localhost:5000`.
 
 ---
 
 ## 🔐 Environment Variables
 
-Create environment configuration files using the provided `.env.example` templates.
+Copy `.env.example` and fill in your values.
 
 ### Backend (`server/.env`)
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/faunanet?retryWrites=true&w=majority
-JWT_SECRET=your_secure_jwt_secret_key_here
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secure_jwt_secret
 NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
 ```
 
-### Frontend (`.env`)
+### Frontend (`.env` in project root)
 
 ```env
 VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
 ```
 
-> ⚠️ **Security Warning**: Never commit actual `.env` files or API secrets to public version control. Ensure `.env` is listed in your `.gitignore`.
+> ⚠️ Never commit real `.env` files. They are listed in `.gitignore`.
 
 ---
 
 ## 🚀 Deployment
 
-### Vercel (Frontend)
-The repository includes a `vercel.json` configuration file pre-configured for client-side SPA routing. Deploy directly via the Vercel CLI or by connecting your GitHub repository to Vercel.
+### Frontend — Vercel
+A `vercel.json` SPA routing config is included. Connect the GitHub repository in the Vercel dashboard or use the Vercel CLI.
 
-### Node.js Backend Host (Render / Railway / VPS)
-Deploy the `server/` directory to Node.js hosting environments:
-* Ensure environment variables (`MONGODB_URI`, `JWT_SECRET`, `PORT`) are configured in your host dashboard.
-* Set the start command to `npm start`.
+### Backend — Render / Railway / VPS
+Deploy the `server/` directory to any Node.js host. Configure all environment variables in your host's dashboard and set the start command to `npm start`.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions from volunteers, developers, and animal welfare advocates are welcome!
+Contributions are welcome. Please:
 
 1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m "Add: your feature description"`
+4. Push and open a Pull Request.
 
 ---
 
 ## 📄 License
 
-This project is open-source software licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright © 2026 HimadriKumariSinha
